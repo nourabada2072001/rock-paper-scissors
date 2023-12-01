@@ -1,0 +1,90 @@
+import random
+import time
+import getpass
+from itertools import combinations_with_replacement
+first_to_play = random.randint(0,1)
+score_1 = score_2 = 0
+c=0
+def players(*player):
+    print()
+    print("Let's See Who Begins The Game ....")
+    time.sleep(2)
+    if first_to_play :
+        print(f"{player[0]} is playing first then {player[1]}")
+    else :
+        print(f"{player[1]} is playing first then {player[0]}")
+    print()
+def game(player_1 = "" ,player_2 = "" ,computer = "",first_to_play = 0 , Game_type = 1):
+    player_1_choose , player_2_choose , computer_choose = 0 , 0 , 0
+    if  first_to_play == 1 and Game_type == 1 :
+        player_1_choose = getpass.getpass("player 1 ,Please Choose rock or paper or scissor (1 or 2 or 3) : ")
+        player_2_choose = getpass.getpass("player 2 ,Please Choose rock or paper or scissor (1 or 2 or 3) : ")
+        return player_1_choose , player_2_choose 
+    elif first_to_play == 1 and Game_type == 2 :
+        player_1_choose = input("player 1 ,Please Choose rock or paper or scissor (1 or 2 or 3) : ")
+        print("wait computer is choosing ...")
+        time.sleep(1.5)
+        computer_choose = random.choice(['1','2','3'])
+        print("jarvis : i choosed it's :)")
+        return player_1_choose , computer_choose 
+    elif first_to_play == 0 and Game_type == 1 :
+        player_2_choose = getpass.getpass("player 2 ,Please Choose rock or paper or scissor (1 or 2 or 3) : ")
+        player_1_choose = getpass.getpass("player 1 ,Please Choose rock or paper or scissor (1 or 2 or 3) : ")
+        return player_1_choose , player_2_choose 
+    else :
+        print("wait computer is choosing ...")
+        time.sleep(1.5)
+        computer_choose = random.choice(['1','2','3'])
+        print("jarvis : i choosed it's your turn human :)")
+        player_1_choose = input("player 1 ,Please Choose rock or paper or scissor (1 or 2 or 3) : ")
+        return player_1_choose , computer_choose 
+     
+documentation = '''                              ( Rock Paper Scissor ) Game
+Description:
+
+In this game, the user gets the first chance to pick the option among Rock, paper and scissors. After that computer select from the remaining two choices(randomly), the winner is decided as per the rules.
+Rock vs paper-> paper wins
+Rock vs scissor-> Rock wins
+paper vs scissor-> scissor wins.'''
+print(documentation)
+try :
+    Game_type = int(input("Hi ,Do you want to play 1vs1 or 1vsC (1 or 2) : "))
+    if Game_type == 1 :
+        player_1 = input("Enter the First Player Name : ")
+        player_2 = input("Enter the Second Player Name : ")
+        computer = ""
+        players(player_1,player_2)
+        
+    else :
+        player_1 = input("Enter the First Player Name : ")
+        player_2 = ""
+        computer = "jarvis"
+        players(player_1,computer)
+except ValueError :
+    print("Please Enter a number (1 or 2) ")
+
+while True :
+    player_1_choose,player_2_choose =  game(player_1 ,player_2 ,computer ,first_to_play ,Game_type)
+    player_2_dic={1:f"player {player_2}",2:f"computer {computer}"}
+    if player_1_choose == player_2_choose:
+        print("Draw Let's try again :) \n")
+    elif (player_1_choose == '1' and player_2_choose == '3') or (player_1_choose == '2' and player_2_choose == '1') or (player_1_choose == '3' and player_2_choose == '2') :
+        print(f"player {player_1} wins") ; score_1+=1
+    else:
+        print(f"{player_2_dic[Game_type]} wins") ; score_2+=1
+    print(f"The Score {score_1} : {score_2}")
+    if score_1 == 3 :
+        print(f"player {player_1} wins this game")
+        c=1
+    if score_2 == 3 :
+        print(f"{player_2_dic[Game_type]} wins this game")
+        c=1
+    if c==1:
+        again = input("\nDo you want to play again (y/n) ")
+        if again == "n":
+            print("\nBye ,i hope you enjoy playing :) ..")
+            break
+        else :
+            score_1 = score_2 = 0
+    print()
+    c=0
